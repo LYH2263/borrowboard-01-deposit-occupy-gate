@@ -1,10 +1,14 @@
 """One active loan per item + overdue detection."""
+from app.engines.occupancy_rules import PENDING_HOLDS_QUOTA
 
-def can_lend(item_status: str, active_loans: int) -> dict:
+def can_lend(item_status: str, active_loans: int, pending_occupancies: int = 0) -> dict:
     if item_status != "available":
         return {"ok": False, "reason": "item_not_available"}
     if active_loans > 0:
         return {"ok": False, "reason": "already_on_loan"}
+    # 与占用档同一套口径：pending 占用占住额度时，直接借出必须失败
+    if PENDING_HOLDS_QUOTA and pending_occupancies > 0:
+        return {"ok": False, "reason": "occupied"}
     return {"ok": True, "reason": ""}
 
 def is_overdue(due_date: str, today: str, loan_status: str) -> bool:

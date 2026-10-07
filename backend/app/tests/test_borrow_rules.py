@@ -4,6 +4,8 @@ def test_mutex():
     assert can_lend("available", 0)["ok"]
     assert can_lend("available", 1)["reason"] == "already_on_loan"
     assert can_lend("retired", 0)["ok"] is False
+    # 占用档同一套口径：pending 占用占住额度，直接借出失败
+    assert can_lend("available", 0, 1)["reason"] == "occupied"
 
 def test_overdue():
     assert is_overdue("2020-01-01", "2026-01-01", "active")

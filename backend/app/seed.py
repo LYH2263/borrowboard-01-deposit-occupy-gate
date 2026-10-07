@@ -10,6 +10,10 @@ def init_db():
       id INTEGER PRIMARY KEY AUTOINCREMENT, item_id INT, borrower TEXT, status TEXT,
       due_date TEXT, lent_at TEXT, returned_at TEXT
     );
+    CREATE TABLE IF NOT EXISTS occupancies(
+      id INTEGER PRIMARY KEY AUTOINCREMENT, item_id INT, borrower TEXT, qty INT,
+      due_date TEXT, status TEXT, created_at TEXT, confirmed_at TEXT, loan_id INT
+    );
     CREATE TABLE IF NOT EXISTS settings(key TEXT PRIMARY KEY, value TEXT);
     """)
     if c.execute("SELECT COUNT(*) c FROM items").fetchone()["c"] == 0:

@@ -2,11 +2,13 @@
   <div>
     <div class="status-bar">
       <span>可借 {{ counts.available || 0 }}</span>
+      <span>占用中 {{ counts.occupied || 0 }}</span>
       <span>在借 {{ counts.active || 0 }}</span>
       <span>逾期 {{ counts.overdue || 0 }}</span>
     </div>
     <nav class="topnav">
       <router-link to="/">看板</router-link>
+      <router-link to="/occupancies">占用</router-link>
       <router-link to="/list">上架</router-link>
       <router-link to="/loans">借还记录</router-link>
       <router-link to="/owners">物主</router-link>
